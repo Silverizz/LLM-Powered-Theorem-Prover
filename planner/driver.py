@@ -19,6 +19,37 @@ from prover.isabelle_api import (
 from prover.prover import prove_goal
 from planner.goals import _print_state_before_hole, _log_state_block, _effective_goal_from_state, _first_lemma_line, _extract_goal_from_lemma_line, _cleanup_resources, _verify_full_proof, _run_theory_with_timeout
 
+
+# Mapping of wrong LLM-generated case names to correct Isabelle names
+_CASE_NAME_FIXES = {
+    r"\bcase L\b": "case left",
+    r"\bcase R\b": "case right",
+    r"\bcase L:": "case left:",
+    r"\bcase R:": "case right:",
+    r"\bcase True\b": "case True",   # already correct but normalize
+    r"\bcase False\b": "case False", # already correct but normalize
+    r"\bcase Nil\b": "case Nil",     # list induction - already correct
+    r"\bcase Cons\b": "case Cons",   # list induction - already correct
+    r"\bcase Zero\b": "case 0",      # nat induction wrong name
+    r"\bcase Succ\b": "case Suc",    # nat induction wrong name
+}
+
+def _fix_case_names(text: str) -> str:
+    """
+    Fix common LLM case naming errors in generated Isar outlines.
+    
+    LLMs frequently generate incorrect case names for standard proof patterns:
+    - Disjunction elimination: 'case L/R' should be 'case left/right'  
+    - Natural number induction: 'case Zero/Succ' should be 'case 0/Suc'
+    
+    This post-processing step corrects these before the CEGIS loop begins,
+    avoiding wasted repair attempts on structurally correct but mis-named proofs.
+    """
+    for pattern, replacement in _CASE_NAME_FIXES.items():
+        text = re.sub(pattern, replacement, text)
+    return text
+
+
 def _hole_fingerprint(full_text: str, span: tuple[int, int], context: int = 80) -> str:
     """Stable key for a hole: hash a small window around the 'sorry'."""
     s, e = span
@@ -492,6 +523,8 @@ def plan_and_fill(goal: str, model: Optional[str] = None, timeout: int = 100, *,
             )
             full = best.text
 
+        full = _fix_case_names(full)
+
         if mode == "outline":
             return PlanAndFillResult(True, full, [], [])
 
@@ -773,6 +806,7 @@ def plan_and_fill(goal: str, model: Optional[str] = None, timeout: int = 100, *,
                                 gamma=gamma, hintlex_path=hintlex_path, hintlex_top=hintlex_top,
                             )
                             full = best2.text
+                            full = _fix_case_names(full)
                             fill_attempts.clear()
                             repair_stage.clear()
                             repair_attempts.clear()
