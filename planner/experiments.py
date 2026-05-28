@@ -357,7 +357,7 @@ def _safe_plan_and_fill(*, goal: str, model: Optional[str], cfg) -> Tuple[Option
             mode=cfg.mode,
             outline_k=(cfg.k),
             outline_temps=cfg.temps,
-            legacy_single_outline=(cfg.k == 1),
+            legacy_single_outline=False, #changed
             repairs=cfg.repairs,
             max_repairs_per_hole=cfg.max_repairs_per_hole,
             trace=cfg.trace,
