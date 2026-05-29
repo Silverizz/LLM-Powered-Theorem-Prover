@@ -115,7 +115,7 @@ python baselines/sledge_only.py \
 ```
 
 ### Example Proof
-![Example Proof](results/example.png)
+<img src="results/example.png" width=75%>
 
 ---
 
