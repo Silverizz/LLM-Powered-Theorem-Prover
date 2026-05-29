@@ -1,0 +1,51 @@
+goal,success,elapsed_s,mode,model,outline_chars,fills,failed_holes,had_sorry,verified_ok
+¬ (∀x∈A. P x) ⟷ (∃x∈A. ¬ P x),True,97.1772,auto,qwen2.5-coder:7b,277,0,0,False,True
+(∃x. P x ∧ Q x) ⟶ (∃x. P x),True,16.0651,auto,qwen2.5-coder:7b,166,0,0,False,True
+(∀x. P x ⟶ Q) ⟶ ((∃x. P x) ⟶ Q),True,16.6744,auto,qwen2.5-coder:7b,214,0,0,False,True
+(∀x∈A. P x ∧ Q x) ⟷ ((∀x∈A. P x) ∧ (∀x∈A. Q x)),True,20.3559,auto,qwen2.5-coder:7b,395,0,0,False,True
+(∃x. P x ∨ Q x) ⟷ ((∃x. P x) ∨ (∃x. Q x)),True,21.4700,auto,qwen2.5-coder:7b,593,0,0,False,True
+(¬ ∃x. P x) ⟷ (∀x. ¬ P x),True,16.2986,auto,qwen2.5-coder:7b,227,0,0,False,True
+(∀x. P x ⟶ R) ⟶ ((∃x. P x) ⟶ R),True,147.4987,auto,qwen2.5-coder:7b,186,2,0,False,True
+(∃x. P x) ⟶ (∀y. P y ⟶ ∃z. P z),True,81.2248,auto,qwen2.5-coder:7b,196,1,0,False,True
+(∃x. P x) ⟶ (∃y. P y ∧ ∃z. P z),True,179.1821,auto,qwen2.5-coder:7b,214,2,0,False,True
+((P ⟶ Q) ∧ (Q ⟶ R)) ⟶ (P ⟶ R),True,106.5469,auto,qwen2.5-coder:7b,526,1,0,False,True
+(P ∧ (Q ∨ R)) ⟶ ((P ∧ Q) ∨ (P ∧ R)),True,22.7382,auto,qwen2.5-coder:7b,707,0,0,False,True
+(P ⟶ Q) ⟷ (¬ P ∨ Q),True,99.4047,auto,qwen2.5-coder:7b,408,0,0,False,True
+(P ∧ False) ⟶ Q,True,55.4179,auto,qwen2.5-coder:7b,111,1,0,False,True
+(P ⟶ (Q ⟶ R)) ⟷ ((P ∧ Q) ⟶ R),True,104.2798,auto,qwen2.5-coder:7b,382,2,0,False,True
+(∀x. P x) ⟶ (∀y. P y),True,58.5709,auto,qwen2.5-coder:7b,151,1,0,False,True
+(A ∩ (B ∪ C)) = (A ∩ B) ∪ (A ∩ C),False,613.5938,auto,qwen2.5-coder:7b,271,0,0,True,True
+A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C),True,123.0504,auto,qwen2.5-coder:7b,221,2,0,False,True
+(A - B) ∪ (A ∩ B) = A,True,44.5196,auto,qwen2.5-coder:7b,249,2,0,False,True
+(A ∩ B) ∪ (A - B) = A,True,60.0682,auto,qwen2.5-coder:7b,257,2,0,False,True
+A ⊆ B ⟶ (A ∩ B = A),False,192.5527,auto,qwen2.5-coder:7b,191,0,0,True,True
+A ⊆ B ⟶ (A ∪ B = B),True,141.5762,auto,qwen2.5-coder:7b,178,1,0,False,True
+(A ⊆ B ∧ B ⊆ C) ⟶ (A ⊆ C),True,16.0827,auto,qwen2.5-coder:7b,206,0,0,False,True
+inj f ⟹ finite A ⟹ card (f ` A) = card A,True,1285.1459,auto,qwen2.5-coder:7b,491,0,0,False,True
+finite A ⟹ card (A ∪ B) + card (A ∩ B) = card A + card B,False,200.4539,auto,qwen2.5-coder:7b,268,0,0,True,True
+finite A ⟹ finite B ⟹ card (A × B) = card A * card B,True,76.1410,auto,qwen2.5-coder:7b,548,0,0,False,True
+finite A ⟹ card (Pow A) = 2 ^ card A,False,611.3075,auto,qwen2.5-coder:7b,246,0,0,True,True
+finite A ⟹ card (A - {a}) = (if a∈A then card A - 1 else card A),False,184.1618,auto,qwen2.5-coder:7b,290,0,0,True,True
+finite A ⟹ finite B ⟹ (A ⊆ B ⟶ card A ≤ card B),True,71.2362,auto,qwen2.5-coder:7b,426,1,0,False,True
+finite A ⟹ finite B ⟹ card (A ∪ B) ≤ card A + card B,True,139.2026,auto,qwen2.5-coder:7b,461,0,0,False,True
+inj_on f A ⟹ finite A ⟹ card (f ` A) = card A,True,186.5826,auto,qwen2.5-coder:7b,729,0,0,False,True
+finite A ⟹ card (insert a A) = (if a∈A then card A else Suc (card A)),True,16.1393,auto,qwen2.5-coder:7b,299,0,0,False,True
+(f ` (A ∩ B)) ⊆ (f ` A ∩ f ` B),True,18.7325,auto,qwen2.5-coder:7b,387,0,0,False,True
+A ⊆ f -` (f ` A),True,48.4707,auto,qwen2.5-coder:7b,203,2,0,False,True
+(f ` A) ∩ (f ` B) ⊆ f ` (A ∩ B),True,18.0836,auto,qwen2.5-coder:7b,351,0,0,False,True
+bij f ⟹ f -` (f ` A) = A,False,192.6362,auto,qwen2.5-coder:7b,221,0,0,True,True
+sym r ⟹ sym (r⁻¹),True,186.1757,auto,qwen2.5-coder:7b,404,0,0,False,True
+(r O Id) = r,True,94.5115,auto,qwen2.5-coder:7b,235,0,0,False,True
+(Id O r) = r,True,13.8137,auto,qwen2.5-coder:7b,97,0,0,False,True
+trans r ⟹ trans (r⁻¹),True,80.0964,auto,qwen2.5-coder:7b,371,1,0,False,True
+refl r ⟹ refl (r⁻¹),True,126.0608,auto,qwen2.5-coder:7b,177,2,0,False,True
+antisym r ⟹ antisym (r⁻¹),False,617.9872,auto,qwen2.5-coder:7b,600,0,0,True,True
+r ⊆ s ⟹ rtrancl r ⊆ rtrancl s,False,190.6879,auto,qwen2.5-coder:7b,444,0,0,True,True
+trancl (r ∪ s) = trancl (trancl r ∪ trancl s),False,219.9423,auto,qwen2.5-coder:7b,267,0,0,True,True
+Domain (r O s) = Domain s ∩ (s -` (Domain r)),True,190.8032,auto,qwen2.5-coder:7b,355,0,0,False,True
+Range (r O s) = Range r ∩ (r `` (Range s)),True,175.9491,auto,qwen2.5-coder:7b,350,0,0,False,True
+rev (xs @ ys) = rev ys @ rev xs,True,24.7814,auto,qwen2.5-coder:7b,145,1,0,False,True
+length (map f xs) = length xs,True,61.5501,auto,qwen2.5-coder:7b,492,0,0,False,True
+map f (xs @ ys) = map f xs @ map f ys,True,24.9069,auto,qwen2.5-coder:7b,158,1,0,False,True
+take (length xs) (xs @ ys) = xs,True,15.3973,auto,qwen2.5-coder:7b,245,0,0,False,True
+drop (length xs) (xs @ ys) = ys,True,68.1565,auto,qwen2.5-coder:7b,241,1,0,False,True

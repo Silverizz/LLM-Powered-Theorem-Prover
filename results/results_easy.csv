@@ -1,0 +1,101 @@
+goal,success,elapsed_s,mode,model,outline_chars,fills,failed_holes,had_sorry,verified_ok
+(A ∧ (B ⟶ C)) ⟶ ((A ∧ B) ⟶ C),True,37.4751,auto,qwen2.5-coder:7b,566,0,0,False,True
+(A ⟶ (B ⟶ C)) ⟶ (A ∧ B ⟶ C),True,17.5246,auto,qwen2.5-coder:7b,228,0,0,False,True
+(¬ A ∧ ¬ B) ⟷ ¬(A ∨ B),True,106.1569,auto,qwen2.5-coder:7b,275,0,0,False,True
+(A ⟶ B) ⟷ (¬A ∨ B),True,20.0836,auto,qwen2.5-coder:7b,340,0,0,False,True
+(A ⟶ B) ⟶ (¬B ⟶ ¬A),True,121.1020,auto,qwen2.5-coder:7b,135,1,0,False,True
+(A ∧ (B ∨ C)) ⟶ ((A ∧ B) ∨ (A ∧ C)),True,20.1121,auto,qwen2.5-coder:7b,464,0,0,False,True
+((A ⟶ C) ∧ (B ⟶ C)) ⟶ (A ∨ B ⟶ C),True,102.2270,auto,qwen2.5-coder:7b,304,2,0,False,True
+(∀x. P x) ⟷ (¬ (∃x. ¬ P x)),True,64.2375,auto,qwen2.5-coder:7b,364,1,0,False,True
+(∃x. P x ∧ Q x) ⟶ ((∃x. P x) ∧ (∃x. Q x)),True,17.1053,auto,qwen2.5-coder:7b,209,0,0,False,True
+(∀x. P x ⟶ Q x) ⟶ ((∃x. P x) ⟶ (∃x. Q x)),True,18.2100,auto,qwen2.5-coder:7b,259,0,0,False,True
+(if A then B else B) = B,True,17.5629,auto,qwen2.5-coder:7b,322,0,0,False,True
+(f = g) ⟷ (∀x. f x = g x),False,127.2076,auto,qwen2.5-coder:7b,286,0,0,True,True
+A ⊆ B ⟷ (A - B = {}),True,25.8414,auto,qwen2.5-coder:7b,530,2,0,False,True
+Pow A ⊆ Pow B ⟷ A ⊆ B,False,125.6131,auto,qwen2.5-coder:7b,739,0,0,True,True
+Pow A ∩ Pow B = Pow (A ∩ B),True,18.4687,auto,qwen2.5-coder:7b,286,0,0,False,True
+(A - B) ∪ (A ∩ B) = A,True,16.0427,auto,qwen2.5-coder:7b,150,0,0,False,True
+(A - B) ∩ B = {},False,127.9834,auto,qwen2.5-coder:7b,186,0,0,True,True
+{x∈A. P x ∧ Q x} = {x∈A. P x} ∩ {x∈A. Q x},True,1219.6486,auto,qwen2.5-coder:7b,403,0,0,False,True
+{x∈A. P x ∨ Q x} = {x∈A. P x} ∪ {x∈A. Q x},True,65.7225,auto,qwen2.5-coder:7b,175,0,0,False,True
+{x∈A. True} = A,True,59.6072,auto,qwen2.5-coder:7b,158,0,0,False,True
+{x∈A. False} = {},True,73.4408,auto,qwen2.5-coder:7b,176,2,0,False,True
+f ` (A ∩ B) ⊆ (f ` A) ∩ (f ` B),True,20.1451,auto,qwen2.5-coder:7b,397,0,0,False,True
+f ` (A ∪ B) = (f ` A) ∪ (f ` B),True,58.8901,auto,qwen2.5-coder:7b,352,0,0,False,True
+(g ∘ f) ` A = g ` (f ` A),True,71.6482,auto,qwen2.5-coder:7b,301,1,0,False,True
+(A × (B ∩ C)) = (A × B) ∩ (A × C),True,78.9838,auto,qwen2.5-coder:7b,222,2,0,False,True
+((A ∩ B) × C) = (A × C) ∩ (B × C),False,125.5263,auto,qwen2.5-coder:7b,330,0,0,True,True
+x ∈ (A ∩ B) ⟷ (x ∈ A ∧ x ∈ B),True,18.9815,auto,qwen2.5-coder:7b,251,0,0,False,True
+x ∈ (A ∪ B) ⟷ (x ∈ A ∨ x ∈ B),True,16.2440,auto,qwen2.5-coder:7b,177,0,0,False,True
+converse Id = Id,True,55.2020,auto,qwen2.5-coder:7b,153,0,0,False,True
+(r O s) O t = r O (s O t),False,130.1868,auto,qwen2.5-coder:7b,145,2,0,True,True
+Id O r = r,True,16.3469,auto,qwen2.5-coder:7b,196,0,0,False,True
+r O Id = r,True,54.0048,auto,qwen2.5-coder:7b,225,0,0,False,True
+converse (r O s) = (converse s) O (converse r),True,44.6947,auto,qwen2.5-coder:7b,274,2,0,False,True
+Domain (Id_on A) = A,True,99.5873,auto,qwen2.5-coder:7b,146,1,0,False,True
+Range (Id_on A) = A,True,16.9903,auto,qwen2.5-coder:7b,247,0,0,False,True
+Id_on A ⊆ Id,False,126.0860,auto,qwen2.5-coder:7b,146,0,0,True,True
+Domain (r O s) ⊆ Domain r,True,18.7326,auto,qwen2.5-coder:7b,226,1,0,False,True
+Range (r O s) ⊆ Range s,False,139.9306,auto,qwen2.5-coder:7b,332,0,0,True,True
+(λx. x) = id,False,121.0891,auto,qwen2.5-coder:7b,159,1,0,True,True
+(f ∘ id) = f,False,611.7094,auto,qwen2.5-coder:7b,149,0,0,True,True
+(id ∘ f) = f,True,21.0707,auto,qwen2.5-coder:7b,177,1,0,False,True
+(f ∘ (g ∘ h)) = ((f ∘ g) ∘ h),True,16.6172,auto,qwen2.5-coder:7b,192,0,0,False,True
+surj f ⟷ (∀y. ∃x. f x = y),True,20.1084,auto,qwen2.5-coder:7b,385,0,0,False,True
+inj f ⟷ (∀x y. f x = f y ⟶ x = y),False,129.7916,auto,qwen2.5-coder:7b,257,0,0,True,True
+inj_on f A ⟷ (∀x∈A. ∀y∈A. f x = f y ⟶ x = y),False,146.6904,auto,qwen2.5-coder:7b,429,0,0,True,True
+(f(x := f x)) = f,True,94.0725,auto,qwen2.5-coder:7b,138,0,0,False,True
+(f(x := y)) x = y,True,55.7461,auto,qwen2.5-coder:7b,105,0,0,False,True
+x ≠ z ⟶ (f(x := y)) z = f z,True,145.6097,auto,qwen2.5-coder:7b,188,0,0,False,True
+map id xs = xs,True,18.3446,auto,qwen2.5-coder:7b,375,0,0,False,True
+map (g ∘ f) xs = map g (map f xs),True,25.7116,auto,qwen2.5-coder:7b,150,1,0,False,True
+length (replicate n x) = n,True,16.0000,auto,qwen2.5-coder:7b,186,0,0,False,True
+set (replicate n x) ⊆ {x},True,103.9644,auto,qwen2.5-coder:7b,121,0,0,False,True
+filter P (rev xs) = rev (filter P xs),False,126.4680,auto,qwen2.5-coder:7b,685,0,0,True,True
+concat (map (λx. [x]) xs) = xs,True,77.9932,auto,qwen2.5-coder:7b,534,0,0,False,True
+map f (concat xss) = concat (map (map f) xss),False,123.1124,auto,qwen2.5-coder:7b,529,1,0,True,True
+take n (take m xs) = take (min n m) xs,False,127.5556,auto,qwen2.5-coder:7b,216,1,0,True,True
+drop n (drop m xs) = drop (n + m) xs,True,67.2665,auto,qwen2.5-coder:7b,152,0,0,False,True
+take n xs = take n (xs @ ys) ⟷ n ≤ length xs,True,134.2361,auto,qwen2.5-coder:7b,282,0,0,False,True
+drop n (xs @ ys) = (drop n xs) @ (drop (n - length xs) ys),True,108.3080,auto,qwen2.5-coder:7b,328,0,0,False,True
+rev (map f xs) = map f (rev xs),True,105.9642,auto,qwen2.5-coder:7b,110,1,0,False,True
+set (filter P xs) = {x ∈ set xs. P x},False,126.2335,auto,qwen2.5-coder:7b,165,0,0,True,True
+distinct xs ⟷ length xs = length (remdups xs),True,100.4083,auto,qwen2.5-coder:7b,237,1,0,False,True
+remdups (remdups xs) = remdups xs,True,16.5168,auto,qwen2.5-coder:7b,220,0,0,False,True
+"zip (map f xs) (map g ys) = map (λp. (f (fst p), g (snd p))) (zip xs ys)",False,691.1696,auto,qwen2.5-coder:7b,237,0,0,True,True
+length (zip xs ys) = min (length xs) (length ys),True,1223.6221,auto,qwen2.5-coder:7b,750,0,0,False,True
+map fst (zip xs ys) = take (min (length xs) (length ys)) xs,False,129.3735,auto,qwen2.5-coder:7b,351,0,0,True,True
+map snd (zip xs ys) = take (min (length xs) (length ys)) ys,False,625.9886,auto,qwen2.5-coder:7b,319,0,0,True,True
+set (rev xs) = set xs,True,62.1286,auto,qwen2.5-coder:7b,124,0,0,False,True
+(Suc m ≤ Suc n) ⟷ (m ≤ n),False,122.8087,auto,qwen2.5-coder:7b,219,1,0,True,True
+(m::nat) ≤ n ⟶ m ≤ n + k,True,15.3210,auto,qwen2.5-coder:7b,120,0,0,False,True
+min (m::nat) n + k = min (m + k) (n + k),True,25.1190,auto,qwen2.5-coder:7b,646,1,0,False,True
+max (m::nat) n + k = max (m + k) (n + k),True,19.5909,auto,qwen2.5-coder:7b,288,1,0,False,True
+(m::nat) + 0 = m,True,14.0453,auto,qwen2.5-coder:7b,101,0,0,False,True
+(0::nat) + m = m,True,14.5417,auto,qwen2.5-coder:7b,112,0,0,False,True
+(m::nat) + Suc n = Suc (m + n),True,14.5874,auto,qwen2.5-coder:7b,128,0,0,False,True
+(m::nat) * (n + k) = m*n + m*k,True,55.3945,auto,qwen2.5-coder:7b,120,0,0,False,True
+min (m::nat) n ≤ m,True,16.1661,auto,qwen2.5-coder:7b,206,0,0,False,True
+m ≤ max (m::nat) n,True,59.0911,auto,qwen2.5-coder:7b,149,1,0,False,True
+(min (m::nat) n) + (max m n) = m + n,False,127.3397,auto,qwen2.5-coder:7b,208,0,0,True,True
+sum_list (map (λ_. (k::nat)) xs) = k * length xs,False,128.2026,auto,qwen2.5-coder:7b,297,0,0,True,True
+length ([m..<m+n]) = n,True,97.9935,auto,qwen2.5-coder:7b,134,0,0,False,True
+map Suc ([m..<m+n]) = [Suc m ..< Suc (m+n)],False,611.6471,auto,qwen2.5-coder:7b,213,0,0,True,True
+(m::nat) ≤ n ⟷ (∃k. m + k = n),False,132.6135,auto,qwen2.5-coder:7b,272,1,0,True,True
+(m::nat) ≠ 0 ⟷ (∃k. m = Suc k),True,17.4494,auto,qwen2.5-coder:7b,299,0,0,False,True
+abs ((a::int) - c) ≤ abs (a - b) + abs (b - c),True,78.9695,auto,qwen2.5-coder:7b,159,0,0,False,True
+((a::int) + b) - c = a + (b - c),True,74.3644,auto,qwen2.5-coder:7b,129,0,0,False,True
+((a::int) - b) + c = a + (c - b),True,25.4126,auto,qwen2.5-coder:7b,140,1,0,False,True
+-( (a::int) - b ) = b - a,True,18.9251,auto,qwen2.5-coder:7b,164,1,0,False,True
+abs ((a::int) + b) = abs (b + a),True,68.3042,auto,qwen2.5-coder:7b,137,0,0,False,True
+min (a::int) b + c = min (a + c) (b + c),True,89.1403,auto,qwen2.5-coder:7b,147,0,0,False,True
+max (a::int) b + c = max (a + c) (b + c),True,70.8595,auto,qwen2.5-coder:7b,145,0,0,False,True
+(a::int) + 0 = a,True,87.2796,auto,qwen2.5-coder:7b,109,0,0,False,True
+0 + (a::int) = a,True,25.0488,auto,qwen2.5-coder:7b,108,1,0,False,True
+(a::int) + (b + c) = (a + b) + c,True,17.3904,auto,qwen2.5-coder:7b,174,1,0,False,True
+"fst (x,y) = x",True,23.9962,auto,qwen2.5-coder:7b,111,1,0,False,True
+"snd (x,y) = y",True,14.1692,auto,qwen2.5-coder:7b,114,0,0,False,True
+"case_prod f (x,y) = f x y",True,16.3714,auto,qwen2.5-coder:7b,170,1,0,False,True
+map_option id o = o,False,132.7521,auto,qwen2.5-coder:7b,455,0,0,True,True
+map_sum id id s = s,True,106.7531,auto,qwen2.5-coder:7b,468,1,0,False,True
+case_sum f g (Inr y) = g y,True,31.4556,auto,qwen2.5-coder:7b,140,1,0,False,True

@@ -1,0 +1,51 @@
+goal,success,elapsed_s,mode,model,outline_chars,fills,failed_holes,had_sorry,verified_ok
+(∀x. P x ⟶ Q x) ∧ (∃x. P x) ⟶ (∃x. Q x),True,100.2623,auto,qwen2.5-coder:7b,209,2,0,False,True
+(∀x. P x ⟷ Q x) ⟶ ((∀x. R x ⟶ P x) ⟷ (∀x. R x ⟶ Q x)),True,164.5791,auto,qwen2.5-coder:7b,208,0,0,False,True
+(∀x. P x) ⟶ ((∀x. Q x ⟶ R x) ⟶ (∀x. P x ∧ Q x ⟶ R x)),True,19.0830,auto,qwen2.5-coder:7b,361,0,0,False,True
+(∃x. P x ∧ (Q x ⟶ R x)) ⟶ ((∃x. P x ∧ Q x) ⟶ (∃x. R x)),False,251.4118,auto,qwen2.5-coder:7b,345,0,0,True,True
+(if A then f x else f y) = f (if A then x else y),True,215.1130,auto,qwen2.5-coder:7b,300,0,0,False,True
+(if A then (B ⟶ C) else True) ⟷ (¬ A ∨ (B ⟶ C)),True,21.3525,auto,qwen2.5-coder:7b,649,0,0,False,True
+(∀x. f x = g x) ⟶ (∃!x. f x = a) ⟶ (∃!x. g x = a),True,20.9912,auto,qwen2.5-coder:7b,496,0,0,False,True
+(∃!x. P x) ⟶ (∀x y. P x ∧ P y ⟶ x = y),False,673.1128,auto,qwen2.5-coder:7b,511,0,0,True,True
+finite A ⟹ card (A ∪ B) = card A + card (B - A),True,106.8067,auto,qwen2.5-coder:7b,469,1,0,False,True
+finite A ⟹ card (A ∩ B) + card (A - B) = card A - card (A ∩ (B - A)),True,96.2645,auto,qwen2.5-coder:7b,358,1,0,False,True
+finite A ⟹ finite B ⟹ A ∩ B = {} ⟹ card (A ∪ B) = card A + card B,False,707.1015,auto,qwen2.5-coder:7b,693,0,0,True,True
+finite A ⟹ card {x∈A. P x ∧ Q x} + card {x∈A. P x ∧ ¬ Q x} = card {x∈A. P x},True,223.9542,auto,qwen2.5-coder:7b,339,0,0,False,True
+finite A ⟹ card {x∈A. P x} + card {x∈A. ¬ P x} = card A,False,615.5190,auto,qwen2.5-coder:7b,505,0,0,True,True
+finite A ⟹ inj_on f A ⟹ card (f ` A) = card A,False,615.0935,auto,qwen2.5-coder:7b,384,0,0,True,True
+finite A ⟹ card ((A × B) ∩ (C × D)) = card (A ∩ C) * card (B ∩ D),False,239.5794,auto,qwen2.5-coder:7b,524,0,0,True,True
+finite A ⟹ finite B ⟹ card (A × B - C) = card (A × B) - card (C ∩ (A × B)),True,213.2203,auto,qwen2.5-coder:7b,380,1,0,False,True
+finite A ⟹ sum (λx. (if x∈B then (1::nat) else 0)) A = card (A ∩ B),False,247.2026,auto,qwen2.5-coder:7b,249,1,0,True,True
+finite A ⟹ sum (λx. (if P x then (1::nat) else 0)) A = card {x∈A. P x},False,618.4168,auto,qwen2.5-coder:7b,547,0,0,True,True
+finite A ⟹ sum (λx. (if x∈A then (0::int) else 0)) A = 0,True,43.4772,auto,qwen2.5-coder:7b,378,2,0,False,True
+finite A ⟹ sum (λx. c::int) A = c * int (card A),True,15.5643,auto,qwen2.5-coder:7b,219,0,0,False,True
+finite A ⟹ sum (λx. f x + g x::int) A = sum f A + sum g A,True,174.5244,auto,qwen2.5-coder:7b,193,0,0,False,True
+finite A ⟹ (∀x∈A. f x = g x) ⟶ sum f A = (sum g A::int),False,617.6052,auto,qwen2.5-coder:7b,656,0,0,True,True
+finite A ⟹ card (A - {x}) = (if x∈A then card A - 1 else card A),True,201.9073,auto,qwen2.5-coder:7b,291,0,0,False,True
+finite A ⟹ card (insert x A) = (if x∈A then card A else Suc (card A)),True,167.5900,auto,qwen2.5-coder:7b,301,0,0,False,True
+"finite A ⟹ finite B ⟹ card { (x,y)∈A×B. P x ∧ Q y } ≤ card A * card B",False,243.8726,auto,qwen2.5-coder:7b,550,1,0,True,True
+finite A ⟹ finite B ⟹ card ((A - C) × (B - D)) = (card A - card (A ∩ C)) * (card B - card (B ∩ D)),False,250.0441,auto,qwen2.5-coder:7b,364,1,0,True,True
+finite A ⟹ finite B ⟹ A ⊆ B ⟹ card B = card A + card (B - A),True,179.9919,auto,qwen2.5-coder:7b,289,0,0,False,True
+finite A ⟹ card (A ∩ B) = card A - card (A - B),True,101.1527,auto,qwen2.5-coder:7b,343,3,0,False,True
+finite A ⟹ card (A ∪ B) + card (A ∩ B) = card A + card B,False,842.6642,auto,qwen2.5-coder:7b,305,0,0,True,True
+finite A ⟹ card (SIGMA x∈A. F x) = sum (λx. card (F x)) A,True,201.1932,auto,qwen2.5-coder:7b,421,3,0,False,True
+finite I ⟹ (∀i∈I. finite (F i)) ⟹ (∀i∈I. ∀j∈I. i≠j ⟶ F i ∩ F j = {}) ⟹ card (⋃i∈I. F i) = (∑i∈I. card (F i)),False,722.2432,auto,qwen2.5-coder:7b,294,0,0,True,True
+finite A ⟹ inj_on f A ⟹ sum (λx. (1::nat)) (f ` A) = card A,False,624.0616,auto,qwen2.5-coder:7b,663,0,0,True,True
+finite A ⟹ inj_on f A ⟹ card (SIGMA x∈A. {f x}) = card A,False,625.7787,auto,qwen2.5-coder:7b,667,0,0,True,True
+finite A ⟹ card (A × {x}) = card A,False,254.3215,auto,qwen2.5-coder:7b,210,0,0,True,True
+finite A ⟹ card ({x} × A) = card A,True,127.9622,auto,qwen2.5-coder:7b,204,2,0,False,True
+finite A ⟹ finite B ⟹ (A ⊆ B) ⟷ (card A = card (A ∩ B)),True,25.0918,auto,qwen2.5-coder:7b,435,2,0,False,True
+finite A ⟹ card {x∈A. x∈B} = card (A ∩ B),True,16.3552,auto,qwen2.5-coder:7b,212,0,0,False,True
+vimage f (A ∩ B) = vimage f A ∩ vimage f B,True,186.3808,auto,qwen2.5-coder:7b,353,2,0,False,True
+vimage f (A ∪ B) = vimage f A ∪ vimage f B,True,155.3340,auto,qwen2.5-coder:7b,498,0,0,False,True
+inj_on f A ⟹ vimage f (f ` A) ∩ A = A,True,149.8407,auto,qwen2.5-coder:7b,179,1,0,False,True
+f ` (A - B) ⊆ (f ` A) - (f ` (A ∩ B)),True,1222.8865,auto,qwen2.5-coder:7b,524,0,0,False,True
+(g ∘ f) ` (A ∩ B) ⊆ g ` (f ` A) ∩ g ` (f ` B),True,58.0224,auto,qwen2.5-coder:7b,190,0,0,False,True
+{x∈A. P x} ∪ {x∈A. ¬ P x} = A,True,133.9224,auto,qwen2.5-coder:7b,231,2,0,False,True
+{x∈A. P x} ∩ {x∈A. ¬ P x} = {},True,17.8812,auto,qwen2.5-coder:7b,236,0,0,False,True
+"{(x,y)∈A×B. P x ∧ Q y} = (A ∩ {x. P x}) × (B ∩ {y. Q y})",False,620.7014,auto,qwen2.5-coder:7b,489,0,0,True,True
+({x. P x} ∩ {x. Q x}) = {x. P x ∧ Q x},True,102.7484,auto,qwen2.5-coder:7b,173,0,0,False,True
+({x. P x} ∪ {x. Q x}) = {x. P x ∨ Q x},True,60.6205,auto,qwen2.5-coder:7b,160,0,0,False,True
+rtrancl r O rtrancl r = rtrancl r,True,210.3005,auto,qwen2.5-coder:7b,217,2,0,False,True
+trancl Id = Id,True,14.7402,auto,qwen2.5-coder:7b,104,0,0,False,True
+converse (trancl r) = trancl (converse r),True,113.7564,auto,qwen2.5-coder:7b,367,0,0,False,True
