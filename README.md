@@ -114,6 +114,9 @@ python baselines/sledge_only.py \
   --print-logs
 ```
 
+### Example Proof
+![Example Proof](results/Screenshot 2026-05-29 at 19.09.31.png)
+
 ---
 
 ## Project Structure
