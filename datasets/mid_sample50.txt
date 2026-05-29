@@ -1,0 +1,50 @@
+¬ (∀x∈A. P x) ⟷ (∃x∈A. ¬ P x)
+(∃x. P x ∧ Q x) ⟶ (∃x. P x)
+(∀x. P x ⟶ Q) ⟶ ((∃x. P x) ⟶ Q)
+(∀x∈A. P x ∧ Q x) ⟷ ((∀x∈A. P x) ∧ (∀x∈A. Q x))
+(∃x. P x ∨ Q x) ⟷ ((∃x. P x) ∨ (∃x. Q x))
+(¬ ∃x. P x) ⟷ (∀x. ¬ P x)
+(∀x. P x ⟶ R) ⟶ ((∃x. P x) ⟶ R)
+(∃x. P x) ⟶ (∀y. P y ⟶ ∃z. P z)
+(∃x. P x) ⟶ (∃y. P y ∧ ∃z. P z)
+((P ⟶ Q) ∧ (Q ⟶ R)) ⟶ (P ⟶ R)
+(P ∧ (Q ∨ R)) ⟶ ((P ∧ Q) ∨ (P ∧ R))
+(P ⟶ Q) ⟷ (¬ P ∨ Q)
+(P ∧ False) ⟶ Q
+(P ⟶ (Q ⟶ R)) ⟷ ((P ∧ Q) ⟶ R)
+(∀x. P x) ⟶ (∀y. P y)
+(A ∩ (B ∪ C)) = (A ∩ B) ∪ (A ∩ C)
+A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)
+(A - B) ∪ (A ∩ B) = A
+(A ∩ B) ∪ (A - B) = A
+A ⊆ B ⟶ (A ∩ B = A)
+A ⊆ B ⟶ (A ∪ B = B)
+(A ⊆ B ∧ B ⊆ C) ⟶ (A ⊆ C)
+inj f ⟹ finite A ⟹ card (f ` A) = card A
+finite A ⟹ card (A ∪ B) + card (A ∩ B) = card A + card B
+finite A ⟹ finite B ⟹ card (A × B) = card A * card B
+finite A ⟹ card (Pow A) = 2 ^ card A
+finite A ⟹ card (A - {a}) = (if a∈A then card A - 1 else card A)
+finite A ⟹ finite B ⟹ (A ⊆ B ⟶ card A ≤ card B)
+finite A ⟹ finite B ⟹ card (A ∪ B) ≤ card A + card B
+inj_on f A ⟹ finite A ⟹ card (f ` A) = card A
+finite A ⟹ card (insert a A) = (if a∈A then card A else Suc (card A))
+(f ` (A ∩ B)) ⊆ (f ` A ∩ f ` B)
+A ⊆ f -` (f ` A)
+(f ` A) ∩ (f ` B) ⊆ f ` (A ∩ B)
+bij f ⟹ f -` (f ` A) = A
+sym r ⟹ sym (r⁻¹)
+(r O Id) = r
+(Id O r) = r
+trans r ⟹ trans (r⁻¹)
+refl r ⟹ refl (r⁻¹)
+antisym r ⟹ antisym (r⁻¹)
+r ⊆ s ⟹ rtrancl r ⊆ rtrancl s
+trancl (r ∪ s) = trancl (trancl r ∪ trancl s)
+Domain (r O s) = Domain s ∩ (s -` (Domain r))
+Range (r O s) = Range r ∩ (r `` (Range s))
+rev (xs @ ys) = rev ys @ rev xs
+length (map f xs) = length xs
+map f (xs @ ys) = map f xs @ map f ys
+take (length xs) (xs @ ys) = xs
+drop (length xs) (xs @ ys) = ys
