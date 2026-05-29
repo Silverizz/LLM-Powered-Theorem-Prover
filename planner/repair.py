@@ -595,24 +595,7 @@ def try_cegis_repairs(*, full_text: str, hole_span: Tuple[int, int], goal_text: 
                      isabelle, session: str, repair_budget_s: float = 15.0, max_ops_to_try: int = 3,
                      beam_k: int = 1, allow_whole_fallback: bool = False, trace: bool = False,
                      resume_stage: int = 0) -> Tuple[str, bool, str]:
-    """
-    CEGIS-style staged repair.
- 
-    Implements the design spec's repair escalation:
-      Stage 1: regenerate the enclosing have/show micro-block
-      Stage 2: regenerate the enclosing case-block or subproof
-      Stage 3: regenerate the entire proof (whole-proof regen)
- 
-    Key design invariants:
-    - Each call runs exactly the stages >= resume_stage that have remaining budget.
-    - Returns (patched_text, verified_ok, label).
-    - If a stage produces a verified proof, returns immediately (True).
-    - If a stage produces an unverified change (partial progress), returns
-      immediately (False) so the driver can re-run Fill on new sorry holes.
-    - If no stage makes any change, returns (full_text, False, "cegis-nohelp").
-    - _repair_block always returns the ORIGINAL text if no round verified,
-      so callers can reliably detect "no progress" via `patched == full_text`.
-    """
+   
     t0 = time.monotonic()
     left = lambda: max(0.0, repair_budget_s - (time.monotonic() - t0))
  
@@ -646,25 +629,23 @@ def try_cegis_repairs(*, full_text: str, hole_span: Tuple[int, int], goal_text: 
                 stage=1, prior_store=prior_store,
             )
             if patched != full_text:
-                # _repair_block returns a different text only when a round
-                # produced a change; verify to distinguish full vs partial.
+                # _repair_block returns a different text only when a round produced a change
                 thy = build_theory(patched.splitlines(), add_print_state=False, end_with=None)
                 ok, _ = finished_ok(_run_theory_with_timeout(isabelle, session, thy, timeout_s=_ISA_VERIFY_TIMEOUT_S))
                 if ok:
                     return patched, True, "stage=1 block:have-show"
-                # Partial progress: return now so the driver re-runs Fill
-                # on any newly introduced sorry placeholders before escalating.
+                # Partial progress: return now so the driver runs Fill again on any new sorry 
                 if trace:
                     print("[repair] Stage 1 changed proof but did not verify (partial progress).")
                 return patched, False, "stage=1 partial-progress"
-            # No change from stage 1 — fall through to stage 2
+            # No change from stage 1 —> fall through to stage 2
             if trace:
                 print("[repair] Stage 1 made no progress; escalating to stage 2.")
         else:
             if trace:
                 print("[repair] Stage 1: no enclosing have/show block found; skipping.")
  
-        # Update lines/state for stage 2 (still using full_text since stage 1 made no change)
+        # Update lines for stage 2 (still using full_text since stage 1 made no change)
         lines = full_text.splitlines()
         state0 = _print_state_before_hole(isabelle, session, full_text, hole_span, trace=trace)
  
@@ -759,18 +740,7 @@ def try_cegis_repairs(*, full_text: str, hole_span: Tuple[int, int], goal_text: 
 def _repair_block(current_text: str, lines: List[str], start: int, end: int, goal_text: str,
                  state0: str, isabelle, session: str, model: Optional[str], left, trace: bool,
                  block_type: str, stage: int, *, prior_store: Optional[Dict[str, List[str]]] = None) -> str:
-    """
-    Propose LLM repairs for a specific block region and verify each one.
- 
-    FIX vs baseline: returns the ORIGINAL current_text if no round produces
-    a verified (or partially improved) proof. The baseline returned a mutated
-    current_text even on total failure, making it impossible for callers to
-    detect "no progress" reliably.
- 
-    Returns a changed text only when at least one round produced a different
-    proof text (verified or not). The caller is responsible for checking
-    whether the returned text fully verifies.
-    """
+
     original_text = current_text  # snapshot for "no progress" detection
  
     _, errs = _quick_state_and_errors(isabelle, session, current_text)
@@ -850,7 +820,7 @@ def _repair_block(current_text: str, lines: List[str], start: int, end: int, goa
         )
         _log("repair", f"{block_type}-block (output)", blk_with_sorry, trace=trace)
  
-        # Record candidate as failed (for dedup in subsequent rounds)
+        # Record candidate as failed 
         fp = _fingerprint_block(blk_with_sorry)
         if fp and fp not in mem.prev_fps:
             mem.prev_fps.add(fp)
@@ -870,25 +840,24 @@ def _repair_block(current_text: str, lines: List[str], start: int, end: int, goa
         ok, _ = finished_ok(_run_theory_with_timeout(isabelle, session, thy, timeout_s=_ISA_VERIFY_TIMEOUT_S))
  
         if ok:
-            # Fully verified — return immediately
+            # Fully verified return immediately
             return patched
  
         # Not verified but different from input: return this partial progress
-        # so the caller (try_cegis_repairs) can decide to run Fill on new holes
-        # before escalating further. This is the key CEGIS feedback step.
         if patched != original_text:
             if trace:
                 print(f"[repair] Round {rr+1}: changed but unverified — returning partial progress for Fill.")
             return patched
  
-        # Patched is same as original (e.g. sanitization collapsed it) — keep trying
+        # Patched is same as original 
         current_text = patched
         lines = patched_lines
         end = start + len(new_block_lines)
         proof_context = _extract_proof_context(current_text, start)
  
-    # All rounds exhausted with no change — return original so caller sees "no progress"
+    # return original so caller sees "no progress"
     return original_text
+
 # ---------- Public helper: whole-proof regeneration with prior-failure banlist ----------
 def regenerate_whole_proof(*, full_text: str, goal_text: str, model: Optional[str],
                            isabelle, session: str, budget_s: float = 20.0,
