@@ -35,7 +35,7 @@ Added `_fix_case_names()`, a post-processing step applied to all generated outli
 
 ## Benchmark Results
 
-Evaluated on HOL test datasets using `qwen2.5-coder:7b` (local, no GPU) on a M3 MacBook Pro with 18GB memory:
+Evaluated on HOL test datasets using `qwen2.5-coder:7b` locally on a M3 MacBook Pro with 18GB memory:
 
 | Method | Easy (100 goals) | Mid (50 goals) | Hard (50 goals) |
 |---|---|---|---|
