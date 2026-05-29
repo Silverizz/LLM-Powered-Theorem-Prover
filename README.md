@@ -129,6 +129,14 @@ logs/              # Training logs
 
 ---
 
+
+## Contributors
+
+- [Abhishek Nambiar](https://github.com/Silverizz)
+- [Cody Noll](https://github.com/CodyNoll)
+- [Farah Hannah Abdurahman](https://github.com/hannahabdrhmn)
+- [Kartik Lamba](https://github.com/kartiklamba69)
+
 ## Citation
 
 This work builds on:
