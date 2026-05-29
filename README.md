@@ -115,7 +115,7 @@ python baselines/sledge_only.py \
 ```
 
 ### Example Proof
-![Example Proof](results/Screenshot 2026-05-29 at 19.09.31.png)
+![Example Proof](results/example.png)
 
 ---
 
