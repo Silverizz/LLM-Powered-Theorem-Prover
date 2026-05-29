@@ -20,18 +20,18 @@ from prover.prover import prove_goal
 from planner.goals import _print_state_before_hole, _log_state_block, _effective_goal_from_state, _first_lemma_line, _extract_goal_from_lemma_line, _cleanup_resources, _verify_full_proof, _run_theory_with_timeout
 
 
-# Mapping of wrong LLM-generated case names to correct Isabelle names
+# Mapping of wrong LLM generated case names to correct Isabelle names (took me some time to figure this lol)
 _CASE_NAME_FIXES = {
     r"\bcase L\b": "case left",
     r"\bcase R\b": "case right",
     r"\bcase L:": "case left:",
     r"\bcase R:": "case right:",
-    r"\bcase True\b": "case True",   # already correct but normalize
-    r"\bcase False\b": "case False", # already correct but normalize
-    r"\bcase Nil\b": "case Nil",     # list induction - already correct
-    r"\bcase Cons\b": "case Cons",   # list induction - already correct
-    r"\bcase Zero\b": "case 0",      # nat induction wrong name
-    r"\bcase Succ\b": "case Suc",    # nat induction wrong name
+    r"\bcase True\b": "case True",  
+    r"\bcase False\b": "case False", 
+    r"\bcase Nil\b": "case Nil",     
+    r"\bcase Cons\b": "case Cons",   
+    r"\bcase Zero\b": "case 0",      
+    r"\bcase Succ\b": "case Suc",    
 }
 
 def _fix_case_names(text: str) -> str:
@@ -457,23 +457,9 @@ def plan_and_fill(goal: str, model: Optional[str] = None, timeout: int = 100, *,
                  lib_templates: bool = False, alpha: float = 1.0, beta: float = 0.5,
                  gamma: float = 0.2, hintlex_path: Optional[str] = None,
                  hintlex_top: int = 8) -> PlanAndFillResult:
-    """Plan and fill holes in Isar proofs.
-
-    Implements the CEGIS-style loop described in the assignment spec:
-      1. Generate an initial proof outline with the LLM.
-      2. Run Isabelle; if it passes with no sorry, done.
-      3. Find the earliest failure point.
-         - If it is a sorry hole → trigger Fill (call stepwise prover).
-         - If it is a non-sorry line → trigger Repair directly.
-      4. After Fill or Repair, re-run Isabelle from the top (deterministic,
-         always targeting the earliest remaining failure).
-      5. Repair is staged: local (stage 1) → subproof (stage 2) → whole
-         proof (stage 3). Escalate when a stage's attempt budget is exhausted.
-      6. After any Repair that introduces new sorry placeholders, Fill is
-         attempted fresh on those holes before escalating.
-      7. Stop when: proof verified, global timeout, or all repair stages
-         exhausted on a hole.
-    """
+    
+    
+    #Plan and fill holes in Isar proofs.
     if repair_trace and not trace:
         trace = True
 
@@ -537,9 +523,9 @@ def plan_and_fill(goal: str, model: Optional[str] = None, timeout: int = 100, *,
         failed: List[int] = []
 
         # Per-hole state for the CEGIS loop
-        # fill_attempts[hole_key]   = number of fill attempts made on this hole
-        # repair_stage[hole_key]    = current repair stage (1, 2, or 3)
-        # repair_attempts[hole_key] = attempts made at current stage
+        # fill_attempts  = number of fill attempts made on this hole
+        # repair_stage   = current repair stage 1, 2, or 3
+        # repair_attempts = attempts made at current stage
         fill_attempts: dict[str, int] = {}
         repair_stage: dict[str, int] = {}
         repair_attempts: dict[str, int] = {}
@@ -570,13 +556,9 @@ def plan_and_fill(goal: str, model: Optional[str] = None, timeout: int = 100, *,
                 except (TimeoutError, _FuturesTimeout, ValueError) as ex:
                     _restart_isabelle("final_verify", ex)
                     continue
-                # Isabelle says OK via quick check but full verify failed —
-                # treat as success anyway since quick_state had no errors.
                 return PlanAndFillResult(True, full, fills, [])
 
             # Step 3: Find the earliest failure point
-            # Compare the line of the first sorry vs the first Isabelle error.
-            # Always work on whichever comes first in the script.
             err_lines = _extract_error_lines(errs)
             earliest_err_line = min(err_lines) if err_lines else None
 
@@ -586,7 +568,7 @@ def plan_and_fill(goal: str, model: Optional[str] = None, timeout: int = 100, *,
                 earliest_sorry_span = spans[0]
                 earliest_sorry_line = _offset_to_line(full, spans[0][0])
 
-            # Decide: is the earliest failure a sorry hole or a bad line?
+            #  is the earliest failure a sorry hole or a bad line?
             sorry_is_earliest = (
                 earliest_sorry_line is not None and (
                     earliest_err_line is None or
@@ -624,19 +606,19 @@ def plan_and_fill(goal: str, model: Optional[str] = None, timeout: int = 100, *,
                     fill_attempts[hole_key] = attempts_so_far + 1
 
                     if ok:
-                        # Fill succeeded — re-run Isabelle from top
+                        # Fill succeeded —> run Isabelle again from top
                         if trace:
                             print(f"[planner] Fill succeeded for hole @{hole_key}")
                         full = full2
                         fills.append(script)
-                        # Reset state for this hole since it's now closed
+                        # Reset state for this hole since its closed
                         fill_attempts.pop(hole_key, None)
                         repair_stage.pop(hole_key, None)
                         repair_attempts.pop(hole_key, None)
                         continue
 
                     elif full2 != full:
-                        # Partial progress: open minimal sorries and stay focused
+                        # Partial progress
                         if trace:
                             print(f"[planner] Fill made partial progress for hole @{hole_key}, opening sorries...")
                         full = full2
@@ -653,8 +635,7 @@ def plan_and_fill(goal: str, model: Optional[str] = None, timeout: int = 100, *,
                     if trace:
                         print(f"[planner] Fill cap reached for hole @{hole_key}, escalating to repair")
 
-                # Fill exhausted its budget for this hole — fall through to Repair
-                # (intentional fall-through, no continue here)
+                # Fill exhausted its budget for this hole —> fall through to Repair
 
             # ---------------------------------------------------------------- #
             # Step 3b: Earliest failure is a non-sorry line, OR fill is        #
@@ -665,7 +646,7 @@ def plan_and_fill(goal: str, model: Optional[str] = None, timeout: int = 100, *,
                     print("[planner] Repair disabled or time exhausted; stopping.")
                 break
 
-            # Determine which hole/location we are repairing
+            # Determine which hole we are repairing
             if sorry_is_earliest and earliest_sorry_span is not None:
                 repair_span = earliest_sorry_span
                 repair_key = _hole_fingerprint(full, repair_span)
@@ -704,7 +685,7 @@ def plan_and_fill(goal: str, model: Optional[str] = None, timeout: int = 100, *,
                     state = _print_state_before_hole(isa, session, full, repair_span, trace)
                     eff_goal = _effective_goal_from_state(state, goal_text, full, repair_span, trace)
                 except Exception:
-                    pass  # fall back to top-level goal
+                    pass  # fall back to top level goal
 
                 patched, applied, repair_label = try_cegis_repairs(
                     full_text=full, hole_span=repair_span, goal_text=eff_goal, model=model,
@@ -725,7 +706,7 @@ def plan_and_fill(goal: str, model: Optional[str] = None, timeout: int = 100, *,
             repair_attempts[repair_key] = current_attempts + 1
 
             if patched != full:
-                # Repair changed the text — check if it fully verifies
+                # Repair changed the text —> check if it fully verifies?
                 try:
                     if _verify_full_proof(isa, session, patched):
                         if trace:
@@ -750,12 +731,12 @@ def plan_and_fill(goal: str, model: Optional[str] = None, timeout: int = 100, *,
                 if opened:
                     full = full2
 
-                # Reset fill attempts so newly introduced sorrys get fresh fill tries
+                # Reset fill attempts -> newly introduced sorrys get fresh fill tries
                 fill_attempts.clear()
-                # Keep repair stage/attempts for this key in case fill fails again
+                # Keep repair stage for this key in case fill fails againn
                 continue
 
-            # Repair made no change — count attempt and possibly escalate stage
+            # Repair made no change —> count attempt and possibly escalate stage
             if repair_attempts[repair_key] >= _REPAIR_STAGE_CAP:
                 if current_stage < _MAX_REPAIR_STAGE:
                     if trace:
@@ -792,7 +773,7 @@ def plan_and_fill(goal: str, model: Optional[str] = None, timeout: int = 100, *,
                             repair_attempts.clear()
                             continue
 
-                        # Regeneration failed — try a completely fresh outline
+                        # Regeneration failed —> try a completely fresh outline
                         if trace:
                             print("[planner] Whole regeneration failed; proposing fresh outline...")
                         try:
